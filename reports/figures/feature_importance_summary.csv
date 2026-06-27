@@ -1,0 +1,48 @@
+feature,importance,feature_clean
+num__tenure,0.09664777204191044,Tenure
+num__IsMonthToMonth,0.09520273455920396,Ismonthtomonth
+num__TotalCharges,0.08813435664552269,Totalcharges
+num__MonthlyCharges,0.07324861678830913,Monthlycharges
+num__AvgMonthlySpend,0.07317171971454109,Avgmonthlyspend
+num__ChargeIncreaseRatio,0.06049471181615741,Chargeincreaseratio
+cat__Contract_Two year,0.04685503093138959,Contract Two Year
+num__IsFiber,0.03783163635474705,Isfiber
+cat__InternetService_Fiber optic,0.032709273225798086,Internetservice Fiber Optic
+num__IsElectronicCheck,0.025144338166347816,Iselectroniccheck
+cat__PaymentMethod_Electronic check,0.023638581535458756,Paymentmethod Electronic Check
+num__IsNewCustomer,0.022592566136821285,Isnewcustomer
+cat__TenureGroup_Veteran (49-72),0.020676764268039334,Tenuregroup Veteran (49-72)
+num__ServiceCount,0.01984679153905298,Servicecount
+cat__TenureGroup_New (0-6),0.01697250663638887,Tenuregroup New (0-6)
+cat__Contract_One year,0.016161163532433593,Contract One Year
+cat__OnlineSecurity_Yes,0.014837317668996321,Onlinesecurity Yes
+cat__PaperlessBilling_Yes,0.014604614179730937,Paperlessbilling Yes
+cat__TechSupport_Yes,0.013911640512867635,Techsupport Yes
+cat__gender_Male,0.012944486317047308,Gender Male
+num__IsAutoPay,0.0111601500838633,Isautopay
+cat__OnlineBackup_Yes,0.010411524176884013,Onlinebackup Yes
+cat__Dependents_Yes,0.009854751203069561,Dependents Yes
+num__HasSupportBundle,0.009840035264156263,Hassupportbundle
+cat__MultipleLines_Yes,0.009462702805782205,Multiplelines Yes
+cat__Partner_Yes,0.009404189381427829,Partner Yes
+num__HasFamily,0.009187532151206554,Hasfamily
+cat__OnlineBackup_No internet service,0.008350363623115106,Onlinebackup No Internet Service
+cat__StreamingMovies_Yes,0.008343118396156469,Streamingmovies Yes
+cat__StreamingMovies_No internet service,0.008083394022630606,Streamingmovies No Internet Service
+num__SeniorCitizen,0.008065563897112901,Seniorcitizen
+cat__StreamingTV_Yes,0.007906978145580468,Streamingtv Yes
+cat__DeviceProtection_Yes,0.007753459849665066,Deviceprotection Yes
+cat__OnlineSecurity_No internet service,0.007539859413497315,Onlinesecurity No Internet Service
+cat__TechSupport_No internet service,0.007017142802693915,Techsupport No Internet Service
+cat__PaymentMethod_Credit card (automatic),0.006771659007851262,Paymentmethod Credit Card (Automatic)
+num__HasStreaming,0.006710057255307441,Hasstreaming
+cat__TenureGroup_Loyal (25-48),0.006566207385075431,Tenuregroup Loyal (25-48)
+cat__DeviceProtection_No internet service,0.006306954055292722,Deviceprotection No Internet Service
+cat__StreamingTV_No internet service,0.006295243548115947,Streamingtv No Internet Service
+cat__InternetService_No,0.00621312220660624,Internetservice No
+cat__PaymentMethod_Mailed check,0.005903184724576696,Paymentmethod Mailed Check
+cat__TenureGroup_Mid (13-24),0.0047850801663183555,Tenuregroup Mid (13-24)
+num__HasInternet,0.004366027287013035,Hasinternet
+num__HasPhone,0.0027467229245991174,Hasphone
+cat__MultipleLines_No phone service,0.002683768933236175,Multiplelines No Phone Service
+cat__PhoneService_Yes,0.0026445847184016907,Phoneservice Yes

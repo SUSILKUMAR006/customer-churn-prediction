@@ -1,0 +1,45 @@
+{
+  "total_customers": 7043,
+  "predicted_churners_count": 2532,
+  "predicted_churn_rate_pct": 35.95,
+  "total_monthly_revenue": 456116.6,
+  "monthly_revenue_at_risk": 188870.5,
+  "monthly_revenue_at_risk_pct": 41.41,
+  "campaign_retention_success_rate": 0.2,
+  "potential_monthly_savings": 37774.1,
+  "cohorts": {
+    "Low Risk (<30%)": {
+      "count": 3599,
+      "pct": 51.1,
+      "revenue": 200755.85
+    },
+    "Medium Risk (30-70%)": {
+      "count": 1862,
+      "pct": 26.44,
+      "revenue": 132860.45
+    },
+    "High Risk (>=70%)": {
+      "count": 1582,
+      "pct": 22.46,
+      "revenue": 122500.3
+    }
+  },
+  "high_risk_profile": {
+    "contract_distribution": {
+      "Month-to-month": 0.9797724399494311,
+      "One year": 0.019595448798988623,
+      "Two year": 0.0006321112515802782
+    },
+    "internet_distribution": {
+      "Fiber optic": 0.7926675094816688,
+      "DSL": 0.18584070796460178,
+      "No": 0.021491782553729456
+    },
+    "payment_distribution": {
+      "Electronic check": 0.6833122629582806,
+      "Mailed check": 0.14538558786346398,
+      "Bank transfer (automatic)": 0.09418457648546144,
+      "Credit card (automatic)": 0.07711757269279393
+    }
+  }
+}

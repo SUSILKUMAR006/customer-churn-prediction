@@ -1,0 +1,109 @@
+{
+  "models": {
+    "lightgbm": {
+      "path": "D:\\claysys\\customer-churn-prediction\\models\\lightgbm_model.joblib",
+      "train_accuracy": 0.8805,
+      "train_churn_rate_actual": 0.2654,
+      "train_churn_rate_predicted": 0.3695,
+      "hyperparameters": {
+        "boosting_type": "gbdt",
+        "class_weight": "balanced",
+        "colsample_bytree": 0.8,
+        "importance_type": "split",
+        "learning_rate": 0.05,
+        "max_depth": 6,
+        "min_child_samples": 20,
+        "min_child_weight": 0.001,
+        "min_split_gain": 0.0,
+        "n_estimators": 300,
+        "n_jobs": -1,
+        "num_leaves": 31,
+        "objective": null,
+        "random_state": 42,
+        "reg_alpha": 0.0,
+        "reg_lambda": 0.0,
+        "subsample": 0.8,
+        "subsample_for_bin": 200000,
+        "subsample_freq": 0,
+        "verbose": -1
+      },
+      "test_metrics": {
+        "accuracy": 0.7594,
+        "precision": 0.5337,
+        "recall": 0.7406,
+        "f1": 0.6204,
+        "roc_auc": 0.8361
+      }
+    },
+    "logistic_regression": {
+      "path": "D:\\claysys\\customer-churn-prediction\\models\\logistic_regression_model.joblib",
+      "train_accuracy": 0.7563,
+      "train_churn_rate_actual": 0.2654,
+      "train_churn_rate_predicted": 0.4058,
+      "hyperparameters": {
+        "C": 1.0,
+        "class_weight": "balanced",
+        "dual": false,
+        "fit_intercept": true,
+        "intercept_scaling": 1,
+        "l1_ratio": 0.0,
+        "max_iter": 2000,
+        "n_jobs": null,
+        "penalty": "deprecated",
+        "random_state": 42,
+        "solver": "lbfgs",
+        "tol": 0.0001,
+        "verbose": 0,
+        "warm_start": false
+      },
+      "test_metrics": {
+        "accuracy": 0.7459,
+        "precision": 0.5137,
+        "recall": 0.7995,
+        "f1": 0.6255,
+        "roc_auc": 0.8445
+      }
+    },
+    "random_forest": {
+      "path": "D:\\claysys\\customer-churn-prediction\\models\\random_forest_model.joblib",
+      "train_accuracy": 0.8981,
+      "train_churn_rate_actual": 0.2654,
+      "train_churn_rate_predicted": 0.3584,
+      "hyperparameters": {
+        "bootstrap": true,
+        "ccp_alpha": 0.0,
+        "class_weight": "balanced",
+        "criterion": "gini",
+        "max_depth": 14,
+        "max_features": "sqrt",
+        "max_leaf_nodes": null,
+        "max_samples": null,
+        "min_impurity_decrease": 0.0,
+        "min_samples_leaf": 2,
+        "min_samples_split": 5,
+        "min_weight_fraction_leaf": 0.0,
+        "monotonic_cst": null,
+        "n_estimators": 300,
+        "n_jobs": -1,
+        "oob_score": false,
+        "random_state": 42,
+        "verbose": 0,
+        "warm_start": false
+      },
+      "test_metrics": {
+        "accuracy": 0.7665,
+        "precision": 0.5439,
+        "recall": 0.746,
+        "f1": 0.6291,
+        "roc_auc": 0.8407
+      }
+    }
+  },
+  "primary_model": "random_forest",
+  "best_model_path": "D:\\claysys\\customer-churn-prediction\\models\\best_model.joblib",
+  "note": "best_model.joblib currently mirrors LightGBM; Step 7 evaluation may update based on test F1-score.",
+  "evaluation_plots": {
+    "confusion_matrices": "D:\\claysys\\customer-churn-prediction\\reports\\figures\\confusion_matrices.png",
+    "evaluation_curves": "D:\\claysys\\customer-churn-prediction\\reports\\figures\\evaluation_curves.png"
+  }
+}

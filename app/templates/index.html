@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-powered telecom customer churn prediction dashboard and targeted retention engine.">
+    <title>Customer Churn Prediction Dashboard</title>
+    
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo-icon"></div>
+                <h2>RetinaAI</h2>
+            </div>
+            
+            <nav class="nav-menu">
+                <button class="nav-item active" id="btn-analytics" onclick="switchTab('analytics')">
+                    <span class="icon">📊</span> Analytics Dashboard
+                </button>
+                <button class="nav-item" id="btn-predict" onclick="switchTab('predict')">
+                    <span class="icon">🔮</span> Single Predictor
+                </button>
+                <button class="nav-item" id="btn-outreach" onclick="switchTab('outreach')">
+                    <span class="icon">📞</span> High-Risk Outreach
+                </button>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="model-badge">
+                    <div class="pulse-dot"></div>
+                    <div>
+                        <p class="badge-title">Random Forest Classifier</p>
+                        <p class="badge-sub">Test F1-Score: 0.6291</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-header">
+                <h1>Telecom Customer Churn Dashboard</h1>
+                <p class="subtitle">Real-time churn risk scoring and targeted customer retention playbooks</p>
+            </header>
+            
+            <!-- TAB 1: ANALYTICS -->
+            <section id="tab-content-analytics" class="tab-content active">
+                
+                <!-- Financial KPI Cards -->
+                <div class="kpi-grid">
+                    <div class="kpi-card bg-gradient-blue">
+                        <div class="kpi-icon">👥</div>
+                        <div class="kpi-info">
+                            <h3>Total Active Base</h3>
+                            <p class="kpi-value" id="kpi-total-customers">7,043</p>
+                            <span class="kpi-trend">Active Accounts Scored</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card bg-gradient-orange">
+                        <div class="kpi-icon">⚠️</div>
+                        <div class="kpi-info">
+                            <h3>Monthly Revenue at Risk</h3>
+                            <p class="kpi-value" id="kpi-revenue-risk">$188,871</p>
+                            <span class="kpi-trend danger-text" id="kpi-revenue-risk-pct">41.41% of total billing</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card bg-gradient-cyan">
+                        <div class="kpi-icon">💰</div>
+                        <div class="kpi-info">
+                            <h3>Potential Campaign Savings</h3>
+                            <p class="kpi-value" id="kpi-potential-savings">$37,774</p>
+                            <span class="kpi-trend success-text">Assuming 20% retention rate</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cohort & Distribution Analytics -->
+                <div class="analytics-grid">
+                    <!-- Risk Cohort Breakdown -->
+                    <div class="grid-card">
+                        <h3>Churn Risk Cohorts Breakdown</h3>
+                        <p class="card-desc">Customers grouped by machine learning prediction probabilities</p>
+                        
+                        <div class="cohort-list">
+                            <!-- High Risk -->
+                            <div class="cohort-item">
+                                <div class="cohort-header">
+                                    <span class="cohort-badge risk-high">High Risk (>=70%)</span>
+                                    <span class="cohort-stats"><strong id="cohort-high-count">1,582</strong> customers (<span id="cohort-high-pct">22.46%</span>)</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar bg-risk-high" id="cohort-high-bar" style="width: 22.46%"></div>
+                                </div>
+                                <p class="cohort-rev">Monthly revenue: <span id="cohort-high-rev">$122,500</span></p>
+                            </div>
+                            
+                            <!-- Medium Risk -->
+                            <div class="cohort-item">
+                                <div class="cohort-header">
+                                    <span class="cohort-badge risk-medium">Medium Risk (30-70%)</span>
+                                    <span class="cohort-stats"><strong id="cohort-medium-count">1,862</strong> customers (<span id="cohort-medium-pct">26.44%</span>)</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar bg-risk-medium" id="cohort-medium-bar" style="width: 26.44%"></div>
+                                </div>
+                                <p class="cohort-rev">Monthly revenue: <span id="cohort-medium-rev">$132,860</span></p>
+                            </div>
+                            
+                            <!-- Low Risk -->
+                            <div class="cohort-item">
+                                <div class="cohort-header">
+                                    <span class="cohort-badge risk-low">Low Risk (<30%)</span>
+                                    <span class="cohort-stats"><strong id="cohort-low-count">3,599</strong> customers (<span id="cohort-low-pct">51.10%</span>)</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar bg-risk-low" id="cohort-low-bar" style="width: 51.10%"></div>
+                                </div>
+                                <p class="cohort-rev">Monthly revenue: <span id="cohort-low-rev">$200,756</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Churn Rationale & Insights -->
+                    <div class="grid-card">
+                        <h3>Top Churn Drivers (Feature Importance)</h3>
+                        <p class="card-desc">Most influential factors determining customer churn risk</p>
+                        
+                        <div class="drivers-list">
+                            <div class="driver-item">
+                                <div class="driver-rank">1</div>
+                                <div class="driver-info">
+                                    <h4>Short tenure with the company</h4>
+                                    <p>Customers in their first 6 months have an overall churn rate of 52.94%.</p>
+                                </div>
+                            </div>
+                            <div class="driver-item">
+                                <div class="driver-rank">2</div>
+                                <div class="driver-info">
+                                    <h4>Month-to-month contracts</h4>
+                                    <p>Lack of long-term contract lock-in correlates with a 42.71% churn rate.</p>
+                                </div>
+                            </div>
+                            <div class="driver-item">
+                                <div class="driver-rank">3</div>
+                                <div class="driver-info">
+                                    <h4>Fiber optic internet service</h4>
+                                    <p>Fiber users churn at 41.89%, suggesting high price-sensitivity on premium tiers.</p>
+                                </div>
+                            </div>
+                            <div class="driver-item">
+                                <div class="driver-rank">4</div>
+                                <div class="driver-info">
+                                    <h4>Electronic check payment friction</h4>
+                                    <p>Paying manually via e-check shows a 45.29% churn rate compared to auto-pay (~15%).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- TAB 2: SINGLE PREDICTOR -->
+            <section id="tab-content-predict" class="tab-content">
+                <div class="predict-layout">
+                    <!-- Prediction Form -->
+                    <div class="grid-card form-card">
+                        <h3>Predict Customer Churn Risk</h3>
+                        <p class="card-desc">Input customer contract and billing features to calculate risk and retrieve retention playbooks</p>
+                        
+                        <form id="predict-form" onsubmit="submitPrediction(event)">
+                            <div class="form-grid">
+                                <!-- Demographics -->
+                                <div class="form-section">
+                                    <h4 class="section-title">Demographics</h4>
+                                    <div class="form-group">
+                                        <label for="gender">Gender</label>
+                                        <select id="gender" required>
+                                            <option value="Female">Female</option>
+                                            <option value="Male">Male</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="SeniorCitizen">Senior Citizen</label>
+                                        <select id="SeniorCitizen" required>
+                                            <option value="0">No (Age < 65)</option>
+                                            <option value="1">Yes (Age 65+)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Partner">Has Partner</label>
+                                        <select id="Partner" required>
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Dependents">Has Dependents</label>
+                                        <select id="Dependents" required>
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <!-- Core Services -->
+                                <div class="form-section">
+                                    <h4 class="section-title">Core Services</h4>
+                                    <div class="form-group">
+                                        <label for="PhoneService">Phone Service</label>
+                                        <select id="PhoneService" onchange="togglePhoneService()" required>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" id="group-multiple-lines">
+                                        <label for="MultipleLines">Multiple Phone Lines</label>
+                                        <select id="MultipleLines" required>
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No phone service">No phone service</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="InternetService">Internet Service</label>
+                                        <select id="InternetService" onchange="toggleInternetService()" required>
+                                            <option value="Fiber optic">Fiber optic</option>
+                                            <option value="DSL">DSL</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <!-- Add-on Services -->
+                                <div class="form-section" id="section-addons">
+                                    <h4 class="section-title">Internet Add-ons</h4>
+                                    <div class="form-group">
+                                        <label for="OnlineSecurity">Online Security</label>
+                                        <select id="OnlineSecurity" required>
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No internet service">No internet service</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="OnlineBackup">Online Backup</label>
+                                        <select id="OnlineBackup" required>
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No internet service">No internet service</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="DeviceProtection">Device Protection</label>
+                                        <select id="DeviceProtection" required>
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No internet service">No internet service</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="TechSupport">Tech Support</label>
+                                        <select id="TechSupport" required>
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No internet service">No internet service</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="StreamingTV">Streaming TV</label>
+                                        <select id="StreamingTV" required>
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No internet service">No internet service</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="StreamingMovies">Streaming Movies</label>
+                                        <select id="StreamingMovies" required>
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No internet service">No internet service</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <!-- Billing & Contract -->
+                                <div class="form-section">
+                                    <h4 class="section-title">Billing & Contract</h4>
+                                    <div class="form-group">
+                                        <label for="Contract">Contract Type</label>
+                                        <select id="Contract" required>
+                                            <option value="Month-to-month">Month-to-month</option>
+                                            <option value="One year">One year</option>
+                                            <option value="Two year">Two year</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="PaymentMethod">Payment Method</label>
+                                        <select id="PaymentMethod" required>
+                                            <option value="Electronic check">Electronic check</option>
+                                            <option value="Mailed check">Mailed check</option>
+                                            <option value="Bank transfer (automatic)">Bank transfer (automatic)</option>
+                                            <option value="Credit card (automatic)">Credit card (automatic)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="PaperlessBilling">Paperless Billing</label>
+                                        <select id="PaperlessBilling" required>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tenure">Tenure (Months): <span id="tenure-val">12</span></label>
+                                        <input type="range" id="tenure" min="0" max="72" value="12" oninput="updateTenureValue(this.value)" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="MonthlyCharges">Monthly Charge ($)</label>
+                                        <input type="number" id="MonthlyCharges" min="15" max="130" step="0.05" value="65.00" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="TotalCharges">Total Charges ($) <small class="text-muted">(Optional — Auto-calculates)</small></label>
+                                        <input type="number" id="TotalCharges" min="0" max="9000" step="0.05" placeholder="Auto-calculates if empty">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn-submit" id="btn-predict-submit">Analyze Churn Risk</button>
+                        </form>
+                    </div>
+                    
+                    <!-- Prediction Result Panel -->
+                    <div class="grid-card result-card" id="prediction-result-panel">
+                        <div class="result-placeholder" id="result-placeholder">
+                            <div class="placeholder-icon">🔮</div>
+                            <h3>Awaiting Customer Analysis</h3>
+                            <p>Fill out the customer attributes form and click "Analyze Churn Risk" to run the Random Forest prediction engine.</p>
+                        </div>
+                        
+                        <div class="result-display d-none" id="result-display">
+                            <h3>Churn Risk Assessment</h3>
+                            
+                            <div class="score-display">
+                                <div class="dial-container">
+                                    <svg class="dial-svg" viewBox="0 0 100 100">
+                                        <circle class="dial-bg" cx="50" cy="50" r="40"></circle>
+                                        <circle class="dial-fill" id="result-dial-fill" cx="50" cy="50" r="40" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
+                                    </svg>
+                                    <div class="dial-text">
+                                        <span class="dial-number" id="result-probability">0.0%</span>
+                                        <span class="dial-label">Probability</span>
+                                    </div>
+                                </div>
+                                <div class="risk-badge-container">
+                                    <span class="cohort-badge" id="result-cohort-badge">Low Risk</span>
+                                </div>
+                            </div>
+                            
+                            <div class="metrics-summary-grid">
+                                <div class="metric-mini-card">
+                                    <p class="mini-card-label">Avg. Monthly Spend</p>
+                                    <p class="mini-card-val" id="res-avg-spend">$0.00</p>
+                                </div>
+                                <div class="metric-mini-card">
+                                    <p class="mini-card-label">Active Add-ons</p>
+                                    <p class="mini-card-val" id="res-service-count">0 / 6</p>
+                                </div>
+                                <div class="metric-mini-card">
+                                    <p class="mini-card-label">Bill-to-History Ratio</p>
+                                    <p class="mini-card-val" id="res-bill-ratio">1.00</p>
+                                </div>
+                                <div class="metric-mini-card">
+                                    <p class="mini-card-label">Tenure Segment</p>
+                                    <p class="mini-card-val" id="res-tenure-group">New</p>
+                                </div>
+                            </div>
+                            
+                            <div class="playbooks-container">
+                                <h4>Targeted Retention Playbooks</h4>
+                                <div class="playbooks-list" id="result-playbooks">
+                                    <!-- Playbooks will be dynamically inserted here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- TAB 3: HIGH-RISK OUTREACH -->
+            <section id="tab-content-outreach" class="tab-content">
+                <div class="grid-card">
+                    <div class="table-header-controls">
+                        <div>
+                            <h3>High-Risk Customer Outreach List</h3>
+                            <p class="card-desc">Active customers sorted by descending churn probability, ready for proactive retention campaigns</p>
+                        </div>
+                        
+                        <div class="search-box">
+                            <input type="text" id="search-customer-input" placeholder="Search Customer ID..." oninput="handleSearch(this.value)">
+                            <span class="search-icon">🔍</span>
+                        </div>
+                    </div>
+                    
+                    <div class="table-wrapper">
+                        <table class="data-table" id="outreach-table">
+                            <thead>
+                                <tr>
+                                    <th>Customer ID</th>
+                                    <th>Tenure</th>
+                                    <th>Contract</th>
+                                    <th>Internet Service</th>
+                                    <th>Monthly Charge</th>
+                                    <th>Churn Probability</th>
+                                    <th>Risk Level</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="outreach-table-body">
+                                <!-- Table rows will be dynamically loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination-container">
+                        <span class="pagination-info" id="pagination-info">Showing 1-10 of 1,582 customers</span>
+                        <div class="pagination-buttons">
+                            <button class="btn-page" id="btn-page-prev" onclick="changePage(-1)" disabled>Previous</button>
+                            <button class="btn-page" id="btn-page-next" onclick="changePage(1)">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <!-- INTERACTIVE MODAL FOR OUTREACH PLAYBOOK -->
+    <div class="modal-overlay" id="playbook-modal" onclick="closeModal(event)">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>Customer Retention Profile</h3>
+                <button class="btn-close-modal" onclick="closeModal(null)">✕</button>
+            </div>
+            <div class="modal-body" id="modal-content">
+                <!-- Modal content will be dynamically loaded here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Custom JS App script -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
